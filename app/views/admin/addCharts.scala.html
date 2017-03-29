@@ -1,0 +1,58 @@
+@* addChartsForm defined above is the parameter passed to this view by the controller *@
+@import helper._
+
+@(addChartsForm: play.data.Form[models.Product], user: models.users.User, env: play.api.Environment)
+
+@* helpers will be used to create the form dynamically, though static HTML form element also work. *@
+
+@admin.adminMain("Add Chart", user) {
+	<h3>Add a new Chart</h3>
+	<!-- Use the views.html.helpers package to create the form -->
+	@form(action = routes.AdminController.addChartsSubmit(), 'class -> "form-horizontal",
+		'role->"form", 'enctype -> "multipart/form-data") {
+		
+		<!-- Build the form, adding an input for each field -->
+		<!-- Note the label parameter -->
+		@inputText(addChartsForm("name"), '_label -> "Name",'class -> "form-control")
+		@inputText(aaddChartsForm("description"), '_label -> "Description",'class -> "form-control")
+
+		@select(
+			addChartsForm("Chart.id"),
+			
+			options(Chart.options),
+			'_label -> "Category", '_default -> "-- Choose a chart --",
+			'_showConstraints -> false, 'class -> "form-control"
+		)
+		@inputText(addChartsForm("Song"), '_label -> "Song",'class -> "form-control")
+		@inputText(addChartsForm("Artist"), '_label -> "Artist",'class -> "form-control")
+        @inputText(addChartsForm("Release"), '_label -> "Release",'class -> "form-control")
+
+		<!-- Image upload input -->
+		<div class="container-fluid">
+			<div class="row">
+				<label>Image</label>
+			</div>
+			<div class="row">
+				@if(env.resource("public/images/chartImages/thumbnails/" + addChartsForm("id").value() + ".jpg").isDefined) {
+					<p><img src="/assets/images/chart/thumbnails/@(addChartsForm("id").value() + ".jpg")"/></p>
+				} else {
+					<p><img src="/assets/images/chartImages/thumbnails/noImage.png"/></p>
+				}
+			</div>
+			<div class="row">
+				<input class="btn-sm btn-default" type="file" name="upload">
+			</div>
+		</div>
+
+		<!-- Hidden ID field - required for product updates -->
+		@inputText(addChartsForm("id"), '_label -> "", 'hidden -> "hidden")
+
+	<!-- Add a submit button -->
+  <div class="actions">
+      <input type="submit" value="Save" class="btn btn-primary">
+			<a href="@routes.AdminController.products()"><button class="btn btn-warning">Cancel</button>
+	  		</a>
+  </div>
+	} <!-- End Form definition -->
+
+} <!-- End of page content -->

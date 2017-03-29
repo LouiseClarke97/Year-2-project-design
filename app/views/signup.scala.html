@@ -1,0 +1,65 @@
+@(addUsersForm: Form[models.users.User])
+@import helper._
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title> Signup</title>
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    </head>
+    <body>
+    <!-- start of nav section -->
+    <nav class="navbar navbar-inverse">
+            <!-- nav header/ branding -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Online Music Shop</a>
+            </div>
+            <!-- List containing nav links -->
+            <ul class="nav navbar-nav">
+                <li ><a href="@routes.HomeController.index()">Home</a></li>
+                <li ><a href="@routes.HomeController.about()">About Us</a></li>
+                <li ><a href="@routes.HomeController.products()">Products</a></li>
+                <li ><a href="@routes.HomeController.charts()">Charts</a></li>
+                <li ><a href="@routes.HomeController.contactUs()">Contact us</a></li>
+                <li ><a href="@routes.HomeController.signup()">Signup</a></li>
+                <li ><a href="@controllers.security.routes.LoginController.login()">Login</a></li>
+      </nav>
+     @if(flash.containsKey("success")) {
+              <div class="alert alert-success">
+              @flash.get("success")
+              </div>
+          }
+    <div class="col-sm-12">
+    <h3>Signup</h3>
+
+         @form(action = routes.HomeController.signupSubmit(), 'class -> "form-horizontal", 'role ->"form") {
+
+        @inputText(addUsersForm("name"), '_label -> "",'class -> "form-control input-xs", 'placeholder -> "Name")
+        @inputText(addUsersForm("email"), '_label -> "",'class -> "form-control input-xs", 'placeholder -> "Email")
+        @inputText(addUsersForm("address"), '_label -> "",'class -> "form-control input-xs", 'placeholder -> "Address")
+        @inputText(addUsersForm("password"), '_label -> "",'class -> "form-control input-xs", 'placeholder -> "Password")
+     
+      <div class="actions">
+      <input type="submit" value=" Create Account " class="btn btn-primary">
+       <a href="@routes.HomeController.index()">
+         <button class="btn btn-warning"> Cancel </button>
+       </a>
+    </div>          
+
+    <br>
+    <br>
+    <div class="col-lg-12">
+    <footer class="container-default">
+     </footer>
+    </div>
+        }
+  
+</div>
+    </body>
+    <!-- Load JavaScript libs last -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+</html>

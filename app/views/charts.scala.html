@@ -1,0 +1,38 @@
+@(charts: List[models.Chart], user: models.users.User)
+
+<!-- Pass page title, user, and content {html between braces} to the main view -->
+@main("Charts", user) {
+  <!-- HTML content for the index view -->
+  <div class="row">
+      <div class="col-sm-12">
+        <div class="well">
+          <h4>Charts</h4>
+        </div>
+        <div class="col-sm-10">
+        <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <!-- The header row-->
+          <tr>
+            <th>Image</th>
+            <th>Song</th>
+            <th>Artist</th>
+            <th>Release Date</th>
+          </tr>
+          </thead>
+          <tbody>
+          @for(c <- charts) {
+            <tr>
+              <td class="numeric">@c.getId</td>
+              <td>@c.getSong</td>
+              <td>@c.getArtist</td>
+              <td>@c.getRelease</td>
+            </tr>
+          }
+          </tbody>
+          </table>
+      </div>
+      </div>
+  </div>
+  <!-- End of content for main -->
+}
+
